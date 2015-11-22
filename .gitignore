@@ -1,5 +1,7 @@
 # ANTLR-generated code:
-antlr/Lucy*.py
+antlr/LucyLexer.py
+antlr/LucyParser.py
+antlr/LucyVisitor.py
 antlr/Lucy*.tokens
 
 
