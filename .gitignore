@@ -1,3 +1,8 @@
+# ANTLR-generated code:
+antlr/Lucy*.py
+antlr/Lucy*.tokens
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
