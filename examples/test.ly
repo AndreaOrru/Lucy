@@ -1,5 +1,11 @@
-Int thirty;
-thirty = 5*(5+1);
+aux (x: Int, y: Int) -> Int
+{
+    z: Int = (x+2) * y;
+    return z;
+}
 
-Int fifty;
-fifty = thirty + 20;
+main ()
+{
+    x: Int = aux(1, 2);
+    return;
+}

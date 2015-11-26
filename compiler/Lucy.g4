@@ -6,24 +6,52 @@ grammar Lucy;
 //////////////
 
 program:
-    stmt* ;
+    (varDecl | funcDecl)* ;
 
-stmt
-    : typ ID ';'       # Decl
-    | ID '=' expr ';'  # Assign
-    ;
+varDecl:
+    ID ':' typ ('=' expr)? ';' ;
+
+funcDecl:
+    ID '(' params? ')' ('->' typ)? block ;
 
 typ:
     'Int' ;
 
+params:
+    param (',' param)* ;
+
+param:
+    ID ':' typ ;
+
 expr
-    : '-' expr                  # MinusExpr
+    : ID '(' exprList? ')'      # CallExpr
+    | '-' expr                  # MinusExpr
     | expr op=('*' | '/') expr  # MulDivExpr
     | expr op=('+' | '-') expr  # AddSubExpr
     | ID                        # IdExpr
     | INT                       # IntExpr
     | '(' expr ')'              # ParensExpr
+    | assign                    # AssignExpr
     ;
+
+exprList:
+    expr (',' expr)* ;
+
+block:
+    '{' stmt* '}' ;
+
+stmt
+    : varDecl
+    | block
+    | assign ';'
+    | ret
+    | expr   ';' ;
+
+assign:
+    ID '=' expr ;
+
+ret:
+    'return' expr? ';' ;
 
 
 /////////////
