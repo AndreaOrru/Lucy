@@ -14,8 +14,10 @@ varDecl:
 funcDecl:
     ID '(' params? ')' ('->' typ)? block ;
 
-typ:
-    'Int' ;
+typ
+    : 'Int'    # IntType
+    | '&' typ  # PtrType
+    ;
 
 params:
     param (',' param)* ;
@@ -26,8 +28,11 @@ param:
 expr
     : ID '(' exprList? ')'      # CallExpr
     | '-' expr                  # MinusExpr
+    | '&' ID                    # RefExpr
+    | '@' expr                  # DerefExpr
     | expr op=('*' | '/') expr  # MulDivExpr
     | expr op=('+' | '-') expr  # AddSubExpr
+    | expr op=('<' | '<=' | '==' | '!=' | '>=' | '>') expr  # RelExpr
     | ID                        # IdExpr
     | INT                       # IntExpr
     | '(' expr ')'              # ParensExpr
@@ -40,18 +45,30 @@ exprList:
 block:
     '{' stmt* '}' ;
 
+blockOrStmt
+    : block
+    | stmt ;
+
 stmt
     : varDecl
+    | ifElse
+    | whileLoop
     | block
     | assign ';'
-    | ret
+    | ret    ';'
     | expr   ';' ;
+
+ifElse:
+    'if' '(' expr ')' blockOrStmt ('else' blockOrStmt)? ;
+
+whileLoop:
+    'while' '(' expr ')' blockOrStmt ;
 
 assign:
     ID '=' expr ;
 
 ret:
-    'return' expr? ';' ;
+    'return' expr? ;
 
 
 /////////////
@@ -68,7 +85,7 @@ fragment Digit:
     [0-9] ;
 
 fragment Letter:
-    [a-zA-Z] ;
+    [_a-zA-Z] ;
 
 SPACE:
     [ \t\n\r]+ -> skip ;
