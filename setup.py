@@ -34,7 +34,7 @@ setup(
     license='BSD-2',
     packages=[
         'lucy',
-        'lucy.parser',
+        'lucy.antlr',
     ],
     install_requires=[
         'antlr4-python3-runtime',
@@ -45,5 +45,5 @@ setup(
         'build': BuildCommand,
     },
     entry_points={
-        'console_scripts': 'lucy=lucy.cli:main'
+        'console_scripts': 'lucy=lucy.cli:main',
     })

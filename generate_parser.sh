@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd lucy/parser
+cd lucy/antlr
 antlr4 -visitor -no-listener -Dlanguage=Python3 Lucy.g4
